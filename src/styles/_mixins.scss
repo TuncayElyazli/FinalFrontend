@@ -1,0 +1,66 @@
+@use 'variables' as *;
+
+// ─────────────────────────────────────────────
+// Mixins
+// ─────────────────────────────────────────────
+
+/// Neon glow box-shadow
+@mixin neon-glow($color: $accent-red, $intensity: 0.4, $spread: 15px) {
+  box-shadow: 0 0 $spread rgba($color, $intensity);
+}
+
+/// Glassmorphism card
+@mixin glass-card($blur: $glass-blur) {
+  background: $glass-bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid $glass-border;
+  border-radius: $radius-lg;
+}
+
+/// Responsive grid
+@mixin responsive-grid($min-col: 280px, $gap: 1.5rem) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-col, 1fr));
+  gap: $gap;
+}
+
+/// Truncate text to N lines
+@mixin truncate-text($lines: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+/// Media query helper
+@mixin breakpoint($size) {
+  @if $size == sm { @media (min-width: $bp-sm) { @content; } }
+  @else if $size == md { @media (min-width: $bp-md) { @content; } }
+  @else if $size == lg { @media (min-width: $bp-lg) { @content; } }
+  @else if $size == xl { @media (min-width: $bp-xl) { @content; } }
+  @else if $size == 2xl { @media (min-width: $bp-2xl) { @content; } }
+}
+
+/// Smooth transitions
+@mixin smooth-transition($properties: all, $duration: $transition-base) {
+  transition: $properties $duration;
+}
+
+/// Surface card style
+@mixin surface-card {
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-lg;
+  @include smooth-transition;
+
+  &:hover {
+    background: $bg-card-hover;
+    border-color: $border-light;
+  }
+}
